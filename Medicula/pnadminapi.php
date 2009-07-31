@@ -16,7 +16,7 @@ function Medicula_adminapi_modsremove($args)
         return LogUtil::registerPermissionError();
     }
 
-    extract($args) ;
+    extract($args);
     unset($args);
 
     if(!isset($delmods) || !is_array($delmods)) {
@@ -24,7 +24,7 @@ function Medicula_adminapi_modsremove($args)
         return false;
     }
 
-    $cnt_del = 0 ;
+    $cnt_del = 0;
 
     $dbconn =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
@@ -36,10 +36,10 @@ function Medicula_adminapi_modsremove($args)
         $sql = 	"DELETE FROM $modulestable
         WHERE $modulescolumn[id] = '" . (int) DataUtil::formatForStore($delmod) . "'";
         if($dbconn->Execute($sql))
-        $cnt_del++ ;
+        $cnt_del++;
 
     }
-    return $cnt_del ;
+    return $cnt_del;
 }
 
 function Medicula_adminapi_usersessions()
@@ -50,8 +50,8 @@ function Medicula_adminapi_usersessions()
 
     $dbconn =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
-    $session_table = $pntable['session_info'] ;
-    $session_column = &$pntable['session_info_column'] ;
+    $session_table = $pntable['session_info'];
+    $session_column = &$pntable['session_info_column'];
 
     $sql = 	"SELECT
     $session_column[uid],
@@ -67,7 +67,7 @@ function Medicula_adminapi_usersessions()
         return false;
     }
 
-    $user_sessions = array() ;
+    $user_sessions = array();
 
     while ($sess = $result->FetchRow()) {
 
@@ -77,11 +77,11 @@ function Medicula_adminapi_usersessions()
         'uname'=>$uname,
         'ipaddr'=>$ipaddr,
         'sessid'=>$sessid,
-        'lastused'=>$lastused) ;
+        'lastused'=>$lastused);
 
     }
     $result->Close();
-    return $user_sessions ;
+    return $user_sessions;
 
 }
 
@@ -91,7 +91,7 @@ function Medicula_adminapi_sessionsremove($args)
         return LogUtil::registerPermissionError();
     }
 
-    extract($args) ;
+    extract($args);
     unset($args);
 
     if(!isset($delsessions) || !is_array($delsessions)) {
@@ -101,20 +101,20 @@ function Medicula_adminapi_sessionsremove($args)
 
     $dbconn =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
-    $session_table = $pntable['session_info'] ;
-    $session_column = &$pntable['session_info_column'] ;
+    $session_table = $pntable['session_info'];
+    $session_column = &$pntable['session_info_column'];
 
-    $cnt_del = 0 ;
+    $cnt_del = 0;
     foreach($delsessions as $delsession) {
 
-        $delsession = DataUtil::formatForStore($delsession) ;
+        $delsession = DataUtil::formatForStore($delsession);
 
         $sql = 	"SELECT
         COUNT(1)
         FROM $session_table
         WHERE $session_column[sessid] = '$delsession'
         ";
-        $mysessid = session_id() ;
+        $mysessid = session_id();
         if($result = $dbconn->Execute($sql)) {
 
             list($numitems) = $result->fields;
@@ -125,16 +125,16 @@ function Medicula_adminapi_sessionsremove($args)
                 FROM $session_table
                 WHERE $session_column[sessid] = '$delsession'
                 AND $session_column[sessid] != '$mysessid'
-                " ;
+                ";
                 if($dbconn->Execute($sql))
-                $cnt_del++ ;
+                $cnt_del++;
 
             }
 
         }
 
     }
-    return $cnt_del ;
+    return $cnt_del;
 }
 
 function Medicula_adminapi_tablesremove($args)
@@ -143,7 +143,7 @@ function Medicula_adminapi_tablesremove($args)
         return LogUtil::registerPermissionError();
     }
 
-    extract($args) ;
+    extract($args);
     unset($args);
 
     if(!isset($deltabs) || !is_array($deltabs)) {
@@ -151,7 +151,7 @@ function Medicula_adminapi_tablesremove($args)
         return false;
     }
 
-    $cnt_del = 0 ;
+    $cnt_del = 0;
     $dbconn =& pnDBGetConn(true);
     $dict = &NewDataDictionary($dbconn);
     $pntables = $dbconn->MetaTables('TABLES');
@@ -166,18 +166,18 @@ function Medicula_adminapi_tablesremove($args)
 
             if (@$dict->ExecuteSQLArray($sqlarray) != 2) {
 
-                $cnt_fail++ ;
+                $cnt_fail++;
 
             } else {
 
-                $cnt_del++ ;
+                $cnt_del++;
 
             }
 
         }
 
     }
-    return $cnt_del ;
+    return $cnt_del;
 }
 
 function Medicula_adminapi_varsremove($args)
@@ -185,7 +185,7 @@ function Medicula_adminapi_varsremove($args)
     if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
-    extract($args) ;
+    extract($args);
     unset($args);
 
     if(!isset($delvars) || !is_array($delvars)) {
@@ -193,19 +193,19 @@ function Medicula_adminapi_varsremove($args)
         return false;
     }
 
-    $cnt_del = 0 ;
+    $cnt_del = 0;
     foreach($delvars as $delvar) {
 
-        $temp = explode ( '-', $delvar ) ;
+        $temp = explode ( '-', $delvar );
         if(count($temp) == 2) {
 
             if(pnModDelVar($temp[0], $temp[1]))
-            $cnt_del++ ;
+            $cnt_del++;
 
         }
 
     }
-    return $cnt_del ;
+    return $cnt_del;
 
 }
 
@@ -214,27 +214,24 @@ function Medicula_adminapi_getallmods()
     if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
-    if(!$admin_mods = pnModGetAdminMods()) {
+
+    $pntable = pnDBGetTables();
+    $modulescolumn = $pntable['modules_column'];
+    $where = "WHERE $modulescolumn[state] = " . PNMODULE_STATE_INACTIVE . "
+              OR $modulescolumn[state] = " . PNMODULE_STATE_ACTIVE . "
+              OR $modulescolumn[state] = " . PNMODULE_STATE_UPGRADED . "";
+    $orderBy = "ORDER BY $modulescolumn[displayname]";
+    $modsarray = DBUtil::selectObjectArray('modules', $where, $orderBy);
+    if ($modsarray === false) {
         return false;
     }
 
-    if(!$user_mods = pnModGetUserMods()) {
-        return false;
+    $mod_list = array();
+    foreach($modsarray as $mod) {
+        $mod_list[] = array('name'=>$mod["name"],'directory'=>$mod["directory"]);
     }
 
-    $mod_list = array() ;
-    foreach($admin_mods as $mod) {
-
-        $mod_list[] = array('name'=>$mod["name"],'directory'=>$mod["directory"]) ;
-
-
-    }
-    unset($admin_mods) ;
-    foreach($user_mods as $mod) {
-        $mod_list[] = array('name'=>$mod["name"],'directory'=>$mod["directory"]) ;
-    }
-    unset($user_mods) ;
-    return $mod_list ;
+    return $mod_list;
 
 }
 
@@ -243,8 +240,8 @@ function Medicula_adminapi_orphanedtables($args)
     if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
-    extract($args) ;
-    unset($args) ;
+    extract($args);
+    unset($args);
 
     if(!isset($mod_list) || !is_array($mod_list)) {
         LogUtil::registerError(_MODARGSERROR);
@@ -255,19 +252,15 @@ function Medicula_adminapi_orphanedtables($args)
     $mod_tab_defs = array();
 
     foreach($mod_list as $mod) {
-
-        pnModDBInfoLoad($mod["name"]) ;
-
+        pnModDBInfoLoad($mod["name"]);
     }
     $pntable = pnDBGetTables();
 
     foreach($pntable as $table_name) {
-
         if(!is_array($table_name))
-        $mod_tab_defs[] = $table_name ;
-
+        $mod_tab_defs[] = $table_name;
     }
-    unset($pntable) ;
+    unset($pntable);
     $pntable = $dbconn->MetaTables('TABLES');
     return array_diff($pntable,$mod_tab_defs);
 }
@@ -279,8 +272,8 @@ function Medicula_adminapi_orphanedvars()
     }
     $dbconn =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
-    $vars_table = $pntable['module_vars'] ;
-    $vars_column = &$pntable['module_vars_column'] ;
+    $vars_table = $pntable['module_vars'];
+    $vars_column = &$pntable['module_vars_column'];
 
     $sql = 	"SELECT
     $vars_column[modname],
@@ -294,18 +287,15 @@ function Medicula_adminapi_orphanedvars()
         return false;
     }
 
-    $unmatched_vars = array() ;
+    $unmatched_vars = array();
 
     while ($var = $result->FetchRow()) {
-
         list($modname, $varname) = $var;
-
         if(!pnModAvailable($modname))
-        $unmatched_vars[] = array('modname'=>$modname,'varname'=>$varname) ;
-
+        $unmatched_vars[] = array('modname'=>$modname,'varname'=>$varname);
     }
     $result->Close();
-    return $unmatched_vars ;
+    return $unmatched_vars;
 }
 
 function Medicula_adminapi_orphanedhooks()
@@ -332,7 +322,7 @@ function Medicula_adminapi_orphanedhooks()
         return false;
     }
 
-    $unmatched_hooks = array() ;
+    $unmatched_hooks = array();
 
     while ($target_hook = $result->FetchRow()) {
 
@@ -342,12 +332,12 @@ function Medicula_adminapi_orphanedhooks()
         $unmatched_hooks[] = array(	'id'=>$id,
         'tmodule'=>$tmodule,
         'smodule'=>$smodule,
-        'action'=>$action) ;
+        'action'=>$action);
 
     }
 
     $result->Close();
-    return $unmatched_hooks ;
+    return $unmatched_hooks;
 
 }
 function Medicula_adminapi_hooksremove($args)
@@ -356,7 +346,7 @@ function Medicula_adminapi_hooksremove($args)
         return LogUtil::registerPermissionError();
     }
 
-    extract($args) ;
+    extract($args);
     unset($args);
 
     if(!isset($delhooks) || !is_array($delhooks))  {
@@ -369,7 +359,7 @@ function Medicula_adminapi_hooksremove($args)
     $hooks_table = $pntable['hooks'];
     $hooks_column = &$pntable['hooks_column'];
 
-    $cnt_del = 0 ;
+    $cnt_del = 0;
     foreach($delhooks as $delhook) {
 
         $sql = 	"SELECT
@@ -387,16 +377,16 @@ function Medicula_adminapi_hooksremove($args)
                 $sql =	"DELETE
                 FROM $hooks_table
                 WHERE $hooks_column[id] = $delhook
-                " ;
+                ";
                 if($dbconn->Execute($sql))
-                $cnt_del++ ;
+                $cnt_del++;
 
             }
 
         }
 
     }
-    return $cnt_del ;
+    return $cnt_del;
 
 }
 
@@ -412,7 +402,7 @@ function Medicula_adminapi_gentestdata()
     $dict = &NewDataDictionary($dbconn);
     $taboptarray =& pnDBGetTableOptions();
 
-    $test_table = pnConfigGetVar('prefix') . '_Medicula_test_ok_to_delete' ;
+    $test_table = pnConfigGetVar('prefix') . '_Medicula_test_ok_to_delete';
     $flds = "
     pn_zipadee    	I	AUTOINCREMENT PRIMARY,
     pn_doodah	   	I	NOTNULL DEFAULT 0

@@ -65,7 +65,7 @@ define('_MEDIC_NOHOOKS','No orphaned hooks were found.');
 define('_MEDIC_NOVARS','No orphaned module variables were found.');
 define('_MEDIC_NOSESSIONS','No user sessions were found.');
 define('_MEDIC_NOMODS','No modules were found.');
-define('_MEDIC_IN_ABOUTTSESS','User names marked in bold are your own.  Your exact session can be identified by the lack of a check box amd as such, cannot be deleted.');
+define('_MEDIC_IN_ABOUTTSESS','User names marked in bold are your own.  Your exact session can be identified by the lack of a check box and as such, cannot be deleted.');
 
 //column headers
 define('_MEDIC_MODULE','Module');

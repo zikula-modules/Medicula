@@ -16,12 +16,6 @@ function Medicula_admin_main()
         return LogUtil::registerPermissionError();
     }
 
-    //$mediclasttool = SessionUtil::getVar('mediclasttool');
-
-    //if(!empty($mediclasttool)) {
-    //  return pnRedirect(pnModURL('Medicula', 'admin', 'main'));
-    //}
-
     $pnRender = pnRender::getInstance('Medicula', false, null, true);
     return $pnRender->fetch('Medicula_admin_main.html');
 }
@@ -31,8 +25,6 @@ function Medicula_admin_modules()
     if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
-
-    SessionUtil::setVar('mediclasttool', 'modules');
 
     $mods = pnModAPIFunc('modules', 'admin', 'list');
 
@@ -77,8 +69,6 @@ function Medicula_admin_sessions()
     if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
-
-    SessionUtil::setVar('mediclasttool', 'sessions');
 
     $user_sessions = pnModAPIFunc( 'Medicula', 'admin', 'usersessions');
 
@@ -126,8 +116,6 @@ function Medicula_admin_hooks()
         return LogUtil::registerPermissionError();
     }
 
-    SessionUtil::setVar('mediclasttool', 'hooks');
-
     $orp_hooks = pnModAPIFunc( 'Medicula', 'admin', 'orphanedhooks');
 
     $pnRender = pnRender::getInstance('Medicula', false, null, true);
@@ -169,13 +157,11 @@ function Medicula_admin_tables()
         return LogUtil::registerPermissionError();
     }
 
-    SessionUtil::setVar('mediclasttool', 'tables');
-
     $mod_list = pnModAPIFunc('Medicula', 'admin', 'getallmods');
 
     if(!$mod_list) {
         LogUtil::registerError(_MEDIC_UNABLETOGETMODS);
-        $orp_tables = array() ;
+        $orp_tables = array();
     } else {
         $orp_tables = pnModAPIFunc( 'Medicula', 'admin', 'orphanedtables', array('mod_list'=>$mod_list));
     }
@@ -217,8 +203,6 @@ function Medicula_admin_vars()
         return LogUtil::registerPermissionError();
     }
 
-    SessionUtil::setVar('mediclasttool', 'vars');
-
     $var_list = pnModAPIFunc('Medicula', 'admin', 'orphanedvars');
 
     $pnRender = pnRender::getInstance('Medicula', false, null, true);
@@ -257,8 +241,6 @@ function Medicula_admin_testdata()
     if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
-
-    SessionUtil::setVar('mediclasttool', 'testdata');
 
     $pnRender = pnRender::getInstance('Medicula', false, null, true);
     $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));

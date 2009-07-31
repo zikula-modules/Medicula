@@ -17,6 +17,9 @@ function Medicula_admin_main()
     }
 
     $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('mods_uninitialised', pnModAPIFunc('Modules', 'admin', 'list', array('state' => PNMODULE_STATE_UNINITIALISED)));
+    $pnRender->assign('mods_missing',       pnModAPIFunc('Modules', 'admin', 'list', array('state' => PNMODULE_STATE_MISSING)));
+    $pnRender->assign('mods_invalid',       pnModAPIFunc('Modules', 'admin', 'list', array('state' => PNMODULE_STATE_INVALID)));
     return $pnRender->fetch('Medicula_admin_main.html');
 }
 
@@ -54,7 +57,7 @@ function Medicula_admin_modsremove()
         return pnRedirect(pnModURL('Medicula', 'admin', 'modules'));
     }
 
-    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'modsremove', array('delmods'=>$delmods));
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'modsremove', array('delmods' => $delmods));
 
     if($cnt_removed) {
         LogUtil::registerStatus(_MEDIC_M_DELMODS);
@@ -100,7 +103,7 @@ function Medicula_admin_sessionsremove()
         return pnRedirect(pnModURL('Medicula', 'admin', 'sessions'));
     }
 
-    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'sessionsremove', array('delsessions'=>$delsessions));
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'sessionsremove', array('delsessions' => $delsessions));
 
     if($cnt_removed) {
         LogUtil::registerStatus(_MEDIC_M_DELSESS);
@@ -140,7 +143,7 @@ function Medicula_admin_hooksremove()
         return pnRedirect(pnModURL('Medicula', 'admin', 'hooks'));
     }
 
-    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'hooksremove', array('delhooks'=>$delhooks));
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'hooksremove', array('delhooks' => $delhooks));
 
     if($cnt_removed) {
         LogUtil::registerError(_MEDIC_M_REMHOOK);
@@ -163,7 +166,7 @@ function Medicula_admin_tables()
         LogUtil::registerError(_MEDIC_UNABLETOGETMODS);
         $orp_tables = array();
     } else {
-        $orp_tables = pnModAPIFunc( 'Medicula', 'admin', 'orphanedtables', array('mod_list'=>$mod_list));
+        $orp_tables = pnModAPIFunc( 'Medicula', 'admin', 'orphanedtables', array('mod_list' => $mod_list));
     }
 
     $pnRender = pnRender::getInstance('Medicula', false, null, true);
@@ -187,7 +190,7 @@ function Medicula_admin_tablesremove()
         return pnRedirect(pnModURL('Medicula', 'admin', 'tables'));
     }
 
-    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'tablesremove', array('deltabs'=>$deltabs));
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'tablesremove', array('deltabs' => $deltabs));
 
     if($cnt_removed) {
         LogUtil::registerStatus(_MEDIC_M_REMTABLES);
@@ -227,7 +230,7 @@ function Medicula_admin_varsremove()
         return pnRedirect(pnModURL('Medicula', 'admin', 'vars'));
     }
 
-    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'varsremove', array('delvars'=>$delvars));
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'varsremove', array('delvars' => $delvars));
 
     if($cnt_removed) {
         LogUtil::registerStatus(_MEDIC_M_REMVARS);

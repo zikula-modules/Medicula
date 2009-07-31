@@ -4,4 +4,25 @@
 
 <div class="pn-informationmsg"><!--[pnml name="_MEDIC_IN_PICKTOOL"]--><br /><!--[pnml name="_MEDIC_IN_ABOUTTESTDATA"]--></div>
 
+<h3>mods_uninitialised (<!--[ $mods_uninitialised|@count]-->)</h3>
+<ul>
+    <!--[ foreach item=mod from=$mods_uninitialised ]-->
+    <li><!--[ $mod.displayname ]--></li>
+    <!--[ /foreach ]-->
+</ul>
+
+<h3>mods_missing (<!--[ $mods_missing|@count]-->)</h3>
+<ul>
+    <!--[ foreach item=mod from=$mods_missing ]-->
+    <li><!--[ $mod.displayname ]--></li>
+    <!--[ /foreach ]-->
+</ul>
+
+<h3>mods_invalid (<!--[ $mods_invalid|@count]-->)</h3>
+<ul>
+    <!--[ foreach item=mod from=$mods_invalid ]-->
+    <li><!--[ $mod.displayname ]--></li>
+    <!--[ /foreach ]-->
+</ul>
+
 <!--[ include file='Medicula_admin_footer.html' ]-->

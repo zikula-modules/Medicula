@@ -1,0 +1,64 @@
+<!--[*  $Id$  *]-->
+<!--[include file="pnMedic_admin_menu.html"]-->
+<!--[pngetstatusmsg]-->
+
+<form method="post" action="<!--[pnmodurl modname="pnMedic" type="admin" func="sessionsremove" authid=$authid]-->
+  ">
+  <table width="100%">
+    <tr>
+      <td><fieldset>
+        <legend> <strong>
+        <!--[pnml name="_MEDIC_SESSIONS"]-->
+        </strong> </legend>
+		 <!--[if $session_count neq "0"]-->
+		 <p>
+		 <!--[pnml name="_MEDIC_SESSFOUND"]-->
+		 </p>
+		 <p>
+		 <!--[pnml name="_MEDIC_IN_ABOUTTSESS"]-->
+		 </p>		 
+        <table width="100%" class="pn-admintable">
+          <tr>
+            <td colspan="2">
+				<table width="100%">
+				<tr>
+				<th></th>
+				<th><!--[pnml name="_MEDIC_UNAME"]--></th>
+				<th><!--[pnml name="_MEDIC_IPADDRESS"]--></th>
+				<th width="100%"><!--[pnml name="_MEDIC_LASTUSED"]--></th>
+				</tr>				
+				<!--[section name="sessions" loop=$user_sessions]-->
+				<!--[assign var="uid" value=$user_sessions[sessions].uid]-->
+				<!--[assign var="sessid" value=$user_sessions[sessions].sessid]-->
+				<tr>
+				<td>
+							<!--[if $sessid neq $mysessid]-->
+				<input name="delsessions[]" type="checkbox" value="<!--[$user_sessions[sessions].sessid]-->" /><!--[/if ]--></td>
+			<!--[if $uid eq $myuid]-->
+				<td class="var_col"><strong><!--[$user_sessions[sessions].uname]--></strong></td>
+			<!--[else ]-->
+			<td class="var_col"><!--[$user_sessions[sessions].uname]--></td>
+			<!--[/if ]-->
+				<td class="val_col"><!--[$user_sessions[sessions].ipaddr]--></td>
+				<td class="val_col" width="100%"><!--[$user_sessions[sessions].lastused|pndate_format]--></td>
+				</tr>
+				<!--[/section]-->	
+				</table>
+			
+			</td>
+          </tr>		
+        </table>
+		 <!--[else]-->
+		<p>
+		 <!--[pnml name="_MEDIC_NOSESSIONS"]-->
+		 </p>
+		  <!--[/if]-->
+        </fieldset></td>
+    </tr>
+	 <!--[if $session_count neq "0"]-->
+    <tr>
+      <td><input type="submit" value="<!--[pnml name="_MEDIC_DELSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="pnMedic" type="admin" func="main"]--> '"/></td>
+    </tr>
+	 <!--[/if]-->
+  </table>
+</form>

@@ -1,0 +1,53 @@
+<!--[*  $Id$  *]-->
+<!--[include file="pnMedic_admin_menu.html"]-->
+<!--[pngetstatusmsg]-->
+
+<form method="post" action="<!--[pnmodurl modname="pnMedic" type="admin" func="tablesremove" authid=$authid]-->
+  ">
+  <table width="100%">
+    <tr>
+      <td><fieldset>
+        <legend> <strong>
+        <!--[pnml name="_MEDIC_TABLES"]-->
+        </strong> </legend>
+		 <!--[if $table_count neq "0"]-->
+		 <p>
+		 <!--[pnml name="_MEDIC_TABSFOUND"]-->
+		 </p>
+		 <p>
+		 <img src="images/smilies/icon41.gif" width="15" height="15" hspace="2" alt="!" title="!"/>
+		 <em><!--[pnml name="_MEDIC_TABSREMWARNING"]--></em>
+		 </p>		 
+        <table width="100%" class="pn-admintable">
+          <tr>
+            <td colspan="2">
+				<table width="100%">
+				<tr>
+				<th></th>
+				<th width="100%">Table name</th>
+				</tr>				
+				<!--[foreach from=$table_list item=table_name]-->
+				<tr>
+				<td><input name="deltabs[]" type="checkbox" value="<!--[$table_name]-->" /></td>
+				<td class="val_col" width="100%"><!--[$table_name]--></td>
+				</tr>
+				<!--[/foreach]-->	
+				</table>
+			
+			</td>
+          </tr>		
+        </table>
+		 <!--[else]-->
+		<p>
+		 <!--[pnml name="_MEDIC_NOTABS"]-->
+		 </p>
+		  <!--[/if]-->
+        </fieldset></td>
+    </tr>
+	 <!--[if $table_count neq "0"]-->
+    <tr>
+      <td><input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="pnMedic" type="admin" func="main"]--> '"/></td>
+    </tr>
+	 <!--[/if]-->
+  </table>
+</form>

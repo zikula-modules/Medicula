@@ -1,0 +1,52 @@
+<!--[*  $Id$  *]-->
+<!--[include file="pnMedic_admin_menu.html"]-->
+<!--[pngetstatusmsg]-->
+
+
+<form method="post" action="<!--[pnmodurl modname="pnMedic" type="admin" func="varsremove" authid=$authid]-->
+  ">
+  <table width="100%">
+    <tr>
+      <td><fieldset>
+        <legend> <strong>
+        <!--[pnml name="_MEDIC_VARS"]-->
+        </strong> </legend>
+		 <!--[if $var_count neq "0"]-->
+		 <p>
+		 <!--[pnml name="_MEDIC_VARSFOUND"]-->
+		 </p>
+        <table width="100%" class="pn-admintable">
+          <tr>
+            <td colspan="2">
+				<table width="100%">
+				<tr>
+				<th></th>
+				<th>Module</th>
+				<th width="100%">Variable name</th>
+				</tr>				
+				<!--[section name="vars" loop=$var_list]-->
+				<tr>
+				<td><input name="delvars[]" type="checkbox" value="<!--[$var_list[vars].modname]-->-<!--[$var_list[vars].varname]-->" /></td>
+				<td class="var_col"><!--[$var_list[vars].modname]--></td>
+				<td class="val_col" width="100%"><!--[$var_list[vars].varname]--></td>
+				</tr>
+				<!--[/section]-->	
+				</table>
+			
+			</td>
+          </tr>		
+        </table>
+		 <!--[else]-->
+		<p>
+		 <!--[pnml name="_MEDIC_NOVARS"]-->
+		 </p>
+		  <!--[/if]-->
+        </fieldset></td>
+    </tr>
+	 <!--[if $var_count neq "0"]-->
+    <tr>
+      <td><input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="pnMedic" type="admin" func="main"]--> '"/></td>
+    </tr>
+	 <!--[/if]-->
+  </table>
+</form>

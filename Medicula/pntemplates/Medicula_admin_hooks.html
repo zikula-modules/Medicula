@@ -1,53 +1,44 @@
-<!--[*  $Id$  *]-->
-<!--[include file="Medicula_admin_menu.html"]-->
-<!--[pngetstatusmsg]-->
+<!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_HOOKS' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
 
-<form method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="hooksremove" authid=$authid]-->
-  ">
-  <table width="100%">
-    <tr>
-      <td><fieldset>
-        <legend> <strong>
-        <!--[pnml name="_MEDIC_HOOKS"]-->
-        </strong> </legend>
-		 <!--[if $hook_count neq "0"]-->
-		 <p>
-		 <!--[pnml name="_MEDIC_HOOKSFOUND"]-->
-		 </p>
-        <table width="100%" class="pn-admintable">
-          <tr>
-            <td colspan="2">
-				<table width="100%">
-				<tr>
-				<th></th>
-				<th><!--[pnml name="_MEDIC_TARGMOD"]--></th>
-				<th><!--[pnml name="_MEDIC_SOURCEMOD"]--></th>
-				<th width="100%"><!--[pnml name="_MEDIC_ACTION"]--></th>
-				</tr>				
-				<!--[section name="hooks" loop=$hook_list]-->
-				<tr>
-				<td><input name="delhooks[]" type="checkbox" value="<!--[$hook_list[hooks].id]-->" /></td>
-				<td class="var_col"><!--[$hook_list[hooks].tmodule]--></td>
-				<td class="val_col"><!--[$hook_list[hooks].smodule]--></td>
-				<td class="val_col" width="100%"><!--[$hook_list[hooks].action]--></td>
-				</tr>
-				<!--[/section]-->	
-				</table>
-			
-			</td>
-          </tr>		
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="hooksremove" authid=$authid]-->">
+    <div>
+
+        <!--[if $hook_count neq "0"]-->
+
+        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_HOOKSFOUND"]--></div>
+        <table class="pn-admintable">
+            <tr>
+                <th>&nbsp;</th>
+                <th><!--[pnml name="_MEDIC_TARGMOD"]--></th>
+                <th><!--[pnml name="_MEDIC_SOURCEMOD"]--></th>
+                <th><!--[pnml name="_MEDIC_ACTION"]--></th>
+            </tr>
+            <!--[section name="hooks" loop=$hook_list]-->
+            <tr class="<!--[cycle values='pn-odd,pn-even']-->">
+                <td><input name="delhooks[]" type="checkbox" value="<!--[$hook_list[hooks].id]-->" /></td>
+                <td class="var_col"><!--[$hook_list[hooks].tmodule]--></td>
+                <td class="val_col"><!--[$hook_list[hooks].smodule]--></td>
+                <td class="val_col" width="100%"><!--[$hook_list[hooks].action]--></td>
+            </tr>
+            <!--[/section]-->
         </table>
-		 <!--[else]-->
-		<p>
-		 <!--[pnml name="_MEDIC_NOHOOKS"]-->
-		 </p>
-		  <!--[/if]-->
-        </fieldset></td>
-    </tr>
-	 <!--[if $hook_count neq "0"]-->
-    <tr>
-      <td><input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Medicula" type="admin" func="main"]--> '"/></td>
-    </tr>
-	 <!--[/if]-->
-  </table>
+
+        <!--[else]-->
+
+        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_NOHOOKS"]--></div>
+
+        <!--[/if]-->
+
+        <!--[if $hook_count neq "0"]-->
+        <div class="<!--[ $configclass ]-->buttons">
+            <input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />
+        </div>
+        <!--[/if]-->
+
+    </div>
 </form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

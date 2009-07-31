@@ -1,16 +1,18 @@
-<form action="<!--[pnmodurl modname=Modules type=admin func=remove authid=$authid]-->" method="post" enctype="application/x-www-form-urlencoded">
-<table width="90%" border="0" cellspacing="0" cellpadding="3">
-  <tr>
-    <td valign="top"><img src="modules/Medicula/pnimages/install.gif" alt="" width="60" height="50" /></td>
-    <td width="10">&nbsp;</td>
-    <td width="100%" valign="top"><!--[opentable]-->
-<!--[opentable2]--><p><span class="pn-pagetitle"><!--[pnml name="_MEDIC_SETUP"]--></span> </p><!--[closetable2]-->
-      <p><!--[pnml name="_MEDIC_SURETODELETE"]--></p>
-    
-        <input name="Submit" type="submit" id="Submit" value="<!--[pnml name="_MEDIC_DELETE"]-->">
-        &nbsp;
-        <input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Modules" type="admin"]--> '"/><!--[closetable]-->
-     </td>
-  </tr>
-</table>
+<!--[* $Id$ *]-->
+
+<form class="<!--[ $configclass ]-->" action="<!--[pnmodurl modname=Modules type=admin func=remove authid=$authid]-->" method="post" enctype="application/x-www-form-urlencoded">
+    <table width="90%" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+            <td valign="top"><img src="modules/Medicula/pnimages/install.gif" alt="" width="60" height="50" /></td>
+            <td width="10">&nbsp;</td>
+            <td width="100%" valign="top"><!--[opentable]-->
+                <!--[opentable2]--><p><span class="pn-pagetitle"><!--[pnml name="_MEDIC_SETUP"]--></span> </p><!--[closetable2]-->
+                <p><!--[pnml name="_MEDIC_SURETODELETE"]--></p>
+
+                <input name="Submit" type="submit" id="Submit" value="<!--[pnml name="_MEDIC_DELETE"]-->">
+                &nbsp;
+                <input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Modules" type="admin"]--> '"/><!--[closetable]-->
+            </td>
+        </tr>
+    </table>
 </form>

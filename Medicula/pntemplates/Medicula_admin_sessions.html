@@ -1,64 +1,52 @@
-<!--[*  $Id$  *]-->
-<!--[include file="Medicula_admin_menu.html"]-->
-<!--[pngetstatusmsg]-->
+<!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_SESSIONS' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
 
-<form method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="sessionsremove" authid=$authid]-->
-  ">
-  <table width="100%">
-    <tr>
-      <td><fieldset>
-        <legend> <strong>
-        <!--[pnml name="_MEDIC_SESSIONS"]-->
-        </strong> </legend>
-		 <!--[if $session_count neq "0"]-->
-		 <p>
-		 <!--[pnml name="_MEDIC_SESSFOUND"]-->
-		 </p>
-		 <p>
-		 <!--[pnml name="_MEDIC_IN_ABOUTTSESS"]-->
-		 </p>		 
-        <table width="100%" class="pn-admintable">
-          <tr>
-            <td colspan="2">
-				<table width="100%">
-				<tr>
-				<th></th>
-				<th><!--[pnml name="_MEDIC_UNAME"]--></th>
-				<th><!--[pnml name="_MEDIC_IPADDRESS"]--></th>
-				<th width="100%"><!--[pnml name="_MEDIC_LASTUSED"]--></th>
-				</tr>				
-				<!--[section name="sessions" loop=$user_sessions]-->
-				<!--[assign var="uid" value=$user_sessions[sessions].uid]-->
-				<!--[assign var="sessid" value=$user_sessions[sessions].sessid]-->
-				<tr>
-				<td>
-							<!--[if $sessid neq $mysessid]-->
-				<input name="delsessions[]" type="checkbox" value="<!--[$user_sessions[sessions].sessid]-->" /><!--[/if ]--></td>
-			<!--[if $uid eq $myuid]-->
-				<td class="var_col"><strong><!--[$user_sessions[sessions].uname]--></strong></td>
-			<!--[else ]-->
-			<td class="var_col"><!--[$user_sessions[sessions].uname]--></td>
-			<!--[/if ]-->
-				<td class="val_col"><!--[$user_sessions[sessions].ipaddr]--></td>
-				<td class="val_col" width="100%"><!--[$user_sessions[sessions].lastused|pndate_format]--></td>
-				</tr>
-				<!--[/section]-->	
-				</table>
-			
-			</td>
-          </tr>		
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="sessionsremove" authid=$authid]-->">
+    <div>
+
+        <!--[if $session_count neq "0"]-->
+
+        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_SESSFOUND"]--><br /><!--[pnml name="_MEDIC_IN_ABOUTTSESS"]--></div>
+        <table class="pn-admintable">
+            <tr>
+                <th>&nbsp;</th>
+                <th><!--[pnml name="_MEDIC_UNAME"]--></th>
+                <th><!--[pnml name="_MEDIC_IPADDRESS"]--></th>
+                <th><!--[pnml name="_MEDIC_LASTUSED"]--></th>
+            </tr>
+            <!--[section name="sessions" loop=$user_sessions]-->
+            <!--[assign var="uid" value=$user_sessions[sessions].uid]-->
+            <!--[assign var="sessid" value=$user_sessions[sessions].sessid]-->
+            <tr class="<!--[cycle values='pn-odd,pn-even']-->">
+                <td>
+                    <!--[if $sessid neq $mysessid]-->
+                <input name="delsessions[]" type="checkbox" value="<!--[$user_sessions[sessions].sessid]-->" /><!--[/if ]--></td>
+                <!--[if $uid eq $myuid]-->
+                <td class="var_col"><strong><!--[$user_sessions[sessions].uname]--></strong></td>
+                <!--[else ]-->
+                <td class="var_col"><!--[$user_sessions[sessions].uname]--></td>
+                <!--[/if ]-->
+                <td class="val_col"><!--[$user_sessions[sessions].ipaddr]--></td>
+                <td class="val_col" width="100%"><!--[$user_sessions[sessions].lastused|pndate_format]--></td>
+            </tr>
+            <!--[/section]-->
         </table>
-		 <!--[else]-->
-		<p>
-		 <!--[pnml name="_MEDIC_NOSESSIONS"]-->
-		 </p>
-		  <!--[/if]-->
-        </fieldset></td>
-    </tr>
-	 <!--[if $session_count neq "0"]-->
-    <tr>
-      <td><input type="submit" value="<!--[pnml name="_MEDIC_DELSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Medicula" type="admin" func="main"]--> '"/></td>
-    </tr>
-	 <!--[/if]-->
-  </table>
+
+        <!--[else]-->
+
+        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_NOSESSIONS"]--></div>
+
+        <!--[/if]-->
+
+        <!--[if $session_count neq "0"]-->
+        <div class="<!--[ $configclass ]-->buttons">
+            <input type="submit" value="<!--[pnml name="_MEDIC_DELSEL"]-->" />
+        </div>
+        <!--[/if]-->
+
+    </div>
 </form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

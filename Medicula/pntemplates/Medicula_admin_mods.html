@@ -1,57 +1,45 @@
-<!--[*  $Id$  *]-->
-<!--[include file="Medicula_admin_menu.html"]-->
-<!--[pngetstatusmsg]-->
+<!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_MODS' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
 
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="modsremove" authid=$authid]-->">
+    <div>
 
-<form method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="modsremove" authid=$authid]-->">
-  <table width="100%">
-    <tr>
-      <td><fieldset>
-        <legend> <strong>
-        <!--[pnml name="_MEDIC_MODS"]-->
-        </strong> </legend>
-		 <!--[if $module_count neq "0"]-->
-		 <p>
-		 <!--[pnml name="_MEDIC_MODSFOUND"]-->
-		 </p>
-		 <p>
-		 <img src="images/smilies/icon41.gif" width="15" height="15" hspace="2" alt="!" title="!"/>
-		 <em><!--[pnml name="_MEDIC_MODSREMWARNING"]--></em>
-		 </p>			 
-        <table width="100%" class="pn-admintable">
-          <tr>
-            <td colspan="2">
-				<table width="100%">
-				<tr>
-				<th></th>
-				<th><!--[pnml name="_MEDIC_MODULE"]--></th>
-				<th><!--[pnml name="_MEDIC_VERSION"]--></th>
-				<th width="100%"><!--[pnml name="_MEDIC_DESCRIPTION"]--></th>
-				</tr>				
-				<!--[section name="mods" loop=$modules]-->
-				<tr>
-				<td><input name="delmods[]" type="checkbox" value="<!--[$modules[mods].id]-->" /></td>
-				<td class="var_col"><!--[$modules[mods].name]--></td>
-				<td class="val_col"><!--[$modules[mods].version]--></td>
-				<td class="val_col" width="100%"><!--[$modules[mods].description]--></td>
-				</tr>
-				<!--[/section]-->	
-				</table>
-			
-			</td>
-          </tr>		
+        <!--[if $module_count neq "0"]-->
+
+        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_MODSFOUND"]--></div>
+        <div class="pn-warningmsg"><!--[pnml name="_MEDIC_MODSREMWARNING"]--></div>
+        <table class="pn-admintable">
+            <tr>
+                <th>&nbsp;</th>
+                <th><!--[pnml name="_MEDIC_MODULE"]--></th>
+                <th><!--[pnml name="_MEDIC_VERSION"]--></th>
+                <th><!--[pnml name="_MEDIC_DESCRIPTION"]--></th>
+            </tr>
+            <!--[section name="mods" loop=$modules]-->
+            <tr class="<!--[cycle values='pn-odd,pn-even']-->">
+                <td><input name="delmods[]" type="checkbox" value="<!--[$modules[mods].id]-->" /></td>
+                <td class="var_col"><!--[$modules[mods].name]--></td>
+                <td class="val_col"><!--[$modules[mods].version]--></td>
+                <td class="val_col" width="100%"><!--[$modules[mods].description]--></td>
+            </tr>
+            <!--[/section]-->
         </table>
-		 <!--[else]-->
-		<p>
-		 <!--[pnml name="_MEDIC_NOMODS"]-->
-		 </p>
-		  <!--[/if]-->
-        </fieldset></td>
-    </tr>
-	 <!--[if $var_count neq "0"]-->
-    <tr>
-      <td><input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Medicula" type="admin" func="main"]--> '"/></td>
-    </tr>
-	 <!--[/if]-->
-  </table>
+
+        <!--[else]-->
+
+        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_NOMODS"]--></div>
+
+        <!--[/if]-->
+
+        <!--[if $var_count neq "0"]-->
+        <div class="<!--[ $configclass ]-->buttons">
+            <input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />
+        </div>
+        <!--[/if]-->
+
+    </div>
 </form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

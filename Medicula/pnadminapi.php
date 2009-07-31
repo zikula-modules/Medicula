@@ -427,3 +427,22 @@ function Medicula_adminapi_gentestdata()
 
     return true;
 }
+
+/**
+ * get available admin panel links
+ *
+ * @return array array of admin links
+ */
+function Medicula_adminapi_getlinks()
+{
+    $links = array();
+    if (SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        $links[] = array('url' => pnModURL('Medicula', 'admin', 'main'), 'text' => _MEDIC_HOME, 'title' => _MEDIC_HOME);
+        $links[] = array('url' => pnModURL('Medicula', 'admin', 'vars'), 'text' => _MEDIC_VARS, 'title' => _MEDIC_VARS);
+        $links[] = array('url' => pnModURL('Medicula', 'admin', 'tables'), 'text' => _MEDIC_TABLES, 'title' => _MEDIC_TABLES);
+        $links[] = array('url' => pnModURL('Medicula', 'admin', 'hooks'), 'text' => _MEDIC_HOOKS, 'title' => _MEDIC_HOOKS);
+        $links[] = array('url' => pnModURL('Medicula', 'admin', 'sessions'), 'text' => _MEDIC_SESSIONS, 'title' => _MEDIC_SESSIONS);
+        $links[] = array('url' => pnModURL('Medicula', 'admin', 'modules'), 'text' => _MEDIC_MODS, 'title' => _MEDIC_MODS);
+    }
+    return $links;
+}

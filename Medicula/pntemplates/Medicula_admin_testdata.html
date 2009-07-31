@@ -1,23 +1,25 @@
-<!--[*  $Id$  *]-->
-<!--[include file="Medicula_admin_menu.html"]-->
-<!--[pngetstatusmsg]-->
+<!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_TESTDATA' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
 
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="testdatado" authid=$authid]-->">
+    <table width="100%">
+        <tr>
+            <td><fieldset>
+                <legend> <strong>
+                    <!--[pnml name="_MEDIC_TESTDATA"]-->
+                </strong> </legend>
+                <p>
+                    <!--[pnml name="_MEDIC_ABOUTTESTDATA"]-->
+                </p>
+            </fieldset></td>
+        </tr>
 
-<form method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="testdatado" authid=$authid]-->">
-  <table width="100%">
-    <tr>
-      <td><fieldset>
-        <legend> <strong>
-        <!--[pnml name="_MEDIC_TESTDATA"]-->
-        </strong> </legend>
-		 <p>
-		 <!--[pnml name="_MEDIC_ABOUTTESTDATA"]-->
-		 </p>
-       </fieldset></td>
-    </tr>
-
-    <tr>
-      <td><input type="submit" value="<!--[pnml name="_MEDIC_GO"]-->" /></td>
-    </tr>
-  </table>
+        <tr>
+            <td><input type="submit" value="<!--[pnml name="_MEDIC_GO"]-->" /></td>
+        </tr>
+    </table>
 </form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

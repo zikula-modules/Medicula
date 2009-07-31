@@ -1,23 +1,27 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
+/**
+ * Medicula
+ *
+ * @copyright (c) 2009-now, Carsten Volmer
+ * @link http://code.zikula.org/medicula
+ * @version $Id$
+ * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @package Medicula
+ */
 
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Polites
-// Purpose of file: module version file
-// ----------------------------------------------------------------------
-// Last changes by Polites http://www.polites.net
-// ----------------------------------------------------------------------
-
-$modversion['name'] = 'pnMedic';
-$modversion['version'] = '1.2';
-$modversion['displayname'] = 'pnMedic - Database Cleanup Utility';
+/**
+ * set modversion info
+ */
+$modversion['name']        = 'Medicula';
+$modversion['oldnames']    = array('pnMedic');
+$modversion['displayname'] = _MEDIC_DISPLAYNAME;
+$modversion['version']     = '2.0';
 $modversion['description'] = _MEDIC_DESCRIPTION;
-$modversion['help'] = 'pndocs/install.txt';
-$modversion['license'] = 'pndocs/license.txt';
-$modversion['official'] = 0;
-$modversion['author'] = 'Polites';
-$modversion['contact'] = 'http://www.polites.net';
-$modversion['admin'] = 1;
-?>
+$modversion['credits']     = 'pndocs/credits.txt';
+$modversion['help']        = 'pndocs/install.txt';
+$modversion['changelog']   = 'pndocs/changelog.txt';
+$modversion['license']     = 'pndocs/license.txt';
+$modversion['official']    = 0;
+$modversion['author']      = 'Carsten Volmer';
+$modversion['contact']     = 'http://code.zikula.org/medicula';
+$modversion['admin']       = 1;

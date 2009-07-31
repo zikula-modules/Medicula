@@ -1,9 +1,9 @@
 <!--[*  $Id$  *]-->
-<!--[include file="pnMedic_admin_menu.html"]-->
+<!--[include file="Medicula_admin_menu.html"]-->
 <!--[pngetstatusmsg]-->
 
 
-<form method="post" action="<!--[pnmodurl modname="pnMedic" type="admin" func="varsremove" authid=$authid]-->
+<form method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="varsremove" authid=$authid]-->
   ">
   <table width="100%">
     <tr>
@@ -21,8 +21,8 @@
 				<table width="100%">
 				<tr>
 				<th></th>
-				<th> <!--[pnml name="_MEDIC_MODULE"]--></th>
-				<th width="100%"> <!--[pnml name="_MEDIC_VARNAME"]--></th>
+				<th>Module</th>
+				<th width="100%">Variable name</th>
 				</tr>				
 				<!--[section name="vars" loop=$var_list]-->
 				<tr>
@@ -45,7 +45,7 @@
     </tr>
 	 <!--[if $var_count neq "0"]-->
     <tr>
-      <td><input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="pnMedic" type="admin" func="main"]--> '"/></td>
+      <td><input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />&nbsp;<input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Medicula" type="admin" func="main"]--> '"/></td>
     </tr>
 	 <!--[/if]-->
   </table>

@@ -1,6 +1,5 @@
-pnMedic - v1.2
+Medicula - v1.2
 Release Notes
-Polites - http://www.polites.net 
  
 Additions: Added ability to delete modules directly.  Useful when development of a module init routine has created issues.
 

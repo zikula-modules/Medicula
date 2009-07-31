@@ -1,54 +1,48 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
+/**
+* Medicula
+*
+* @copyright (c) 2009-now, Carsten Volmer
+* @link http://code.zikula.org/medicula
+* @version $Id$
+* @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+* @package Medicula
+*/
 
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Polites
-// Purpose of file: module initialization
-// ----------------------------------------------------------------------
-// Last changes by Polites, http://www.polites.net
-// ----------------------------------------------------------------------
-
-function pnMedic_init_interactiveinit()
+function Medicula_init_interactiveinit()
 {
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
 
-    if (!pnSecAuthAction(0, '::', '::', ACCESS_ADMIN))
-        return pnVarPrepHTMLDisplay(_MODULENOAUTH);
-
-    $pnRender =& new pnRender('pnMedic');
-    $pnRender->caching = false;
-	$pnRender->assign('authid', pnSecGenAuthKey('Modules'));
-    return $pnRender->fetch('pnMedic_init_1.html');
-	
-}
-function pnMedic_init(){
-
-	return true;
-}
-function pnMedic_upgrade($oldversion){
-
-    return true;
-	
-}
-
-function pnMedic_init_interactivedelete()
-{
-
-    if (!pnSecAuthAction(0, '::', '::', ACCESS_ADMIN))
-        return pnVarPrepHTMLDisplay(_MODULENOAUTH);
- 
-    $pnRender =& new pnRender('pnMedic');
-    $pnRender->caching = false;
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
     $pnRender->assign('authid', pnSecGenAuthKey('Modules'));
-	
-    return $pnRender->fetch('pnMedic_init_delete.html');
+    return $pnRender->fetch('Medicula_init_1.html');
+
 }
 
-function pnMedic_delete()
+function Medicula_init()
 {
-	
     return true;
 }
 
-?>
+function Medicula_upgrade($oldversion)
+{
+    return true;
+}
+
+function Medicula_init_interactivedelete()
+{
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
+
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('authid', pnSecGenAuthKey('Modules'));
+    return $pnRender->fetch('Medicula_init_delete.html');
+}
+
+function Medicula_delete()
+{
+    return true;
+}

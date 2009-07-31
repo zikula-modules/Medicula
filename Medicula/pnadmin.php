@@ -1,356 +1,286 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Polites
-// Purpose of file: Admin function calls
-// ----------------------------------------------------------------------
-// Last changes by Polites, http://www.polites.net
-// ----------------------------------------------------------------------
-
+/**
+* Medicula
+*
+* @copyright (c) 2009-now, Carsten Volmer
+* @link http://code.zikula.org/medicula
+* @version $Id$
+* @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+* @package Medicula
+*/
 
 //MODULES
-function pnMedic_admin_main()
+function Medicula_admin_main()
 {
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
 
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-	$mediclasttool = pnSessionGetVar('mediclasttool') ;
-	if(!empty($mediclasttool))
-		return pnRedirect(pnModURL('pnMedic', 'admin', pnSessionGetVar('mediclasttool')));
-	
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;			
+    $mediclasttool = SessionUtil::getVar('mediclasttool');
 
-    return $pnRender->fetch('pnMedic_admin_main.html');	    
-	
+    if(!empty($mediclasttool)) {
+        return pnRedirect(pnModURL('Medicula', 'admin', SessionUtil::getVar('mediclasttool')));
+    }
 
-}	
-
-function pnMedic_admin_modules()
-{
-
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-		
-	pnSessionSetVar('mediclasttool', 'modules');	
-	
-    $mods = pnModAPIFunc(	'modules',
-                   			'admin',
-                   			'list');	
-							
-	if(!$mods)
-		pnSessionSetVar('errormsg', _MEDIC_UNABLETOGETMODS );
-
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;		
-	$pnRender->assign('modules',$mods);	
-	$pnRender->assign('module_count', count($mods));	
-	$pnRender->assign('authid',pnSecGenAuthKey());	
-		
-    return $pnRender->fetch('pnMedic_admin_mods.html');	    
-	
-
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    return $pnRender->fetch('Medicula_admin_main.html');
 }
 
-function pnMedic_admin_modsremove()
+function Medicula_admin_modules()
 {
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
 
-    if (!pnSecConfirmAuthKey()) {
-	
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        return pnRedirect(pnModURL('pnMedic', 'admin', 'modules'));
-		
-    } 
-	
-	$delmods = pnVarCleanFromInput('delmods');
-	
-	if(!is_array($delmods)) {
-		
-		pnSessionSetVar('errormsg', pnVarPrepForDisplay( _MEDIC_NOTHINGSEL) );
-		return pnRedirect(pnModURL('pnMedic', 'admin', 'modules'));
-		
-	}
-	
-    $cnt_removed = pnModAPIFunc(	'pnMedic',
-                        			'admin',
-                        			'modsremove',
-									array('delmods'=>$delmods));		
-	if($cnt_removed)
-		pnSessionSetVar('statusmsg', pnVarPrepHTMLDisplay(_MEDIC_M_DELMODS));
-									
-	return pnRedirect(pnModURL('pnMedic', 'admin', 'modules'));
+    SessionUtil::setVar('mediclasttool', 'modules')
 
+    $mods = pnModAPIFunc( 'modules', 'admin', 'list');
+
+    if(!$mods) {
+        LogUtil::registerError(_MEDIC_UNABLETOGETMODS);
+    }
+
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('modules',$mods);
+    $pnRender->assign('module_count', count($mods));
+    $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));
+
+    return $pnRender->fetch('Medicula_admin_mods.html');
+}
+
+function Medicula_admin_modsremove()
+{
+    if (!SecurityUtil::confirmAuthKey()) {
+        LogUtil::registerError(_BADAUTHKEY);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'modsremove'));
+    }
+
+    $delmods = FormUtil::getPassedValue('delmods');
+
+    if(!is_array($delmods)) {
+        LogUtil::registerError(_MEDIC_NOTHINGSEL);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'modules'));
+    }
+
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'modsremove', array('delmods'=>$delmods));
+
+    if($cnt_removed) {
+        LogUtil::registerStatus(_MEDIC_M_DELMODS);
+    }
+
+    return pnRedirect(pnModURL('Medicula', 'admin', 'modules'));
 }
 
 //USERSESSIONS
-function pnMedic_admin_sessions()
+function Medicula_admin_sessions()
 {
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
 
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-	pnSessionSetVar('mediclasttool', 'sessions');	
-	
-    $user_sessions = pnModAPIFunc(	'pnMedic',
-                        			'admin',
-                        			'usersessions');	
-	if(!$user_sessions)
-		pnSessionSetVar('errormsg', _MEDIC_UNABLETOGETSESS );
+    SessionUtil::setVar('mediclasttool', 'sessions')
 
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;		
-	$pnRender->assign('user_sessions',$user_sessions);	
-	$pnRender->assign('session_count', count($user_sessions));	
-	$pnRender->assign('mysessid',  session_id() );
-	$pnRender->assign('myuid', pnUserGetVar('uid') );	
-	$pnRender->assign('authid',pnSecGenAuthKey());	
-		
-    return $pnRender->fetch('pnMedic_admin_sessions.html');	    
-	
+    $user_sessions = pnModAPIFunc( 'Medicula', 'admin', 'usersessions');
 
+    if(!$user_sessions) {
+        LogUtil::registerError(_MEDIC_UNABLETOGETSESS);
+    }
+
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('user_sessions',$user_sessions);
+    $pnRender->assign('session_count', count($user_sessions));
+    $pnRender->assign('mysessid',  session_id() );
+    $pnRender->assign('myuid', pnUserGetVar('uid') );
+    $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));
+
+    return $pnRender->fetch('Medicula_admin_sessions.html');
 }
 
-function pnMedic_admin_sessionsremove()
+function Medicula_admin_sessionsremove()
 {
+    if (!SecurityUtil::confirmAuthKey()) {
+        LogUtil::registerError(_BADAUTHKEY);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'sessionsremove'));
+    }
 
-    if (!pnSecConfirmAuthKey()) {
-	
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        return pnRedirect(pnModURL('pnMedic', 'admin', 'sessions'));
-		
-    } 
+    $delsessions = FormUtil::getPassedValue('delsessions');
 
-	$delsessions = pnVarCleanFromInput('delsessions');
-	
-	if(!is_array($delsessions)) {
-		
-		pnSessionSetVar('errormsg', pnVarPrepForDisplay( _MEDIC_NOTHINGSEL) );
-		return pnRedirect(pnModURL('pnMedic', 'admin', 'sessions'));
-		
-	}
-	
-    $cnt_removed = pnModAPIFunc(	'pnMedic',
-                        			'admin',
-                        			'sessionsremove',
-									array('delsessions'=>$delsessions));		
-	if($cnt_removed)
-		pnSessionSetVar('statusmsg', pnVarPrepHTMLDisplay(_MEDIC_M_DELSESS));
-									
-	return pnRedirect(pnModURL('pnMedic', 'admin', 'sessions'));
+    if(!is_array($delsessions)) {
+        LogUtil::registerError(_MEDIC_NOTHINGSEL);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'sessions'));
+    }
 
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'sessionsremove', array('delsessions'=>$delsessions));
+
+    if($cnt_removed) {
+        LogUtil::registerStatus(_MEDIC_M_DELSESS);
+    }
+
+    return pnRedirect(pnModURL('Medicula', 'admin', 'sessions'));
 }
 
 //HOOKS
-function pnMedic_admin_hooks()
+function Medicula_admin_hooks()
 {
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
 
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-	pnSessionSetVar('mediclasttool', 'hooks');	
+    SessionUtil::setVar('mediclasttool', 'hooks')
 
-    $orp_hooks = pnModAPIFunc(	'pnMedic',
-                        		'admin',
-                        		'orphanedhooks');	
-		
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;		
-	$pnRender->assign('hook_list', $orp_hooks);	
-	$pnRender->assign('hook_count', count($orp_hooks));		
-	$pnRender->assign('authid',pnSecGenAuthKey());	
-		
-    return $pnRender->fetch('pnMedic_admin_hooks.html');	    
-	
+    $orp_hooks = pnModAPIFunc( 'Medicula', 'admin', 'orphanedhooks');
 
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('hook_list', $orp_hooks);
+    $pnRender->assign('hook_count', count($orp_hooks));
+    $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));
+
+    return $pnRender->fetch('Medicula_admin_hooks.html');
 }
 
-function pnMedic_admin_hooksremove()
+function Medicula_admin_hooksremove()
 {
+    if (!SecurityUtil::confirmAuthKey()) {
+        LogUtil::registerError(_BADAUTHKEY);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'hooksremove'));
+    }
 
-    if (!pnSecConfirmAuthKey()) {
-	
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        return pnRedirect(pnModURL('pnMedic', 'admin', 'hooks'));
-		
-    } 
+    $delhooks = FormUtil::getPassedValue('delhooks');
 
-	$delhooks = pnVarCleanFromInput('delhooks');
-	
-	if(!is_array($delhooks)) {
-		
-		pnSessionSetVar('errormsg', pnVarPrepForDisplay( _MEDIC_NOTHINGSEL) );
-		return pnRedirect(pnModURL('pnMedic', 'admin', 'hooks'));
-		
-	}
-	
-    $cnt_removed = pnModAPIFunc(	'pnMedic',
-                        			'admin',
-                        			'hooksremove',
-									array('delhooks'=>$delhooks));		
-	if($cnt_removed)
-		pnSessionSetVar('statusmsg', pnVarPrepHTMLDisplay(_MEDIC_M_REMHOOK));
-												
-	return pnRedirect(pnModURL('pnMedic', 'admin', 'hooks'));
+    if(!is_array($delhooks)) {
+        LogUtil::registerError(_MEDIC_NOTHINGSEL);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'hooks'));
+    }
 
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'hooksremove', array('delhooks'=>$delhooks));
+
+    if($cnt_removed) {
+        LogUtil::registerError(_MEDIC_M_REMHOOK);
+    }
+
+    return pnRedirect(pnModURL('Medicula', 'admin', 'hooks'));
 }
 
 //TABLES
 
-function pnMedic_admin_tables()
+function Medicula_admin_tables()
 {
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
 
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-	pnSessionSetVar('mediclasttool', 'tables');
+    SessionUtil::setVar('mediclasttool', 'tables')
 
-    $mod_list = pnModAPIFunc(	'pnMedic',
-                        		'admin',
-                        		'getallmods');	
-	if(!$mod_list) {
-	
-		pnSessionSetVar('errormsg', _MEDIC_UNABLETOGETMODS );
-		$orp_tables = array() ;
-		
-	} else {
-	
-		$orp_tables = pnModAPIFunc(	'pnMedic',
-									'admin',
-									'orphanedtables',
-									array('mod_list'=>$mod_list));		
-	
-	}
-									
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;			
-	$pnRender->assign('table_list', $orp_tables);	
-	$pnRender->assign('table_count', count($orp_tables));		
-	$pnRender->assign('authid',pnSecGenAuthKey());	
-    return $pnRender->fetch('pnMedic_admin_tables.html');	    
-	
+    $mod_list = pnModAPIFunc('Medicula', 'admin', 'getallmods');
 
+    if(!$mod_list) {
+        LogUtil::registerError(_MEDIC_UNABLETOGETMODS);
+        $orp_tables = array() ;
+    } else {
+        $orp_tables = pnModAPIFunc( 'Medicula', 'admin', 'orphanedtables', array('mod_list'=>$mod_list));
+    }
+
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('table_list', $orp_tables);
+    $pnRender->assign('table_count', count($orp_tables));
+    $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));
+    return $pnRender->fetch('Medicula_admin_tables.html');
 }
 
-function pnMedic_admin_tablesremove()
+function Medicula_admin_tablesremove()
 {
+    if (!SecurityUtil::confirmAuthKey()) {
+        LogUtil::registerError(_BADAUTHKEY);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'tablesremove'));
+    }
 
-    if (!pnSecConfirmAuthKey()) {
-	
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        return pnRedirect(pnModURL('pnMedic', 'admin', 'tables'));
-		
-    } 
+    $deltabs = FormUtil::getPassedValue('deltabs');
 
-	$deltabs = pnVarCleanFromInput('deltabs');
-	
-	if(!is_array($deltabs)) {
-		
-		pnSessionSetVar('errormsg', pnVarPrepForDisplay( _MEDIC_NOTHINGSEL) );
-		return pnRedirect(pnModURL('pnMedic', 'admin', 'tables'));
-		
-	}
-	
-    $cnt_removed = pnModAPIFunc(	'pnMedic',
-                        			'admin',
-                        			'tablesremove',
-									array('deltabs'=>$deltabs));		
-	if($cnt_removed)
-		pnSessionSetVar('statusmsg', pnVarPrepHTMLDisplay(_MEDIC_M_REMTABLES));
-											
-	return pnRedirect(pnModURL('pnMedic', 'admin', 'tables'));
+    if(!is_array($deltabs)) {
+        LogUtil::registerError(_MEDIC_NOTHINGSEL);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'tables'));
+    }
 
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'tablesremove', array('deltabs'=>$deltabs));
+
+    if($cnt_removed) {
+        LogUtil::registerStatus(_MEDIC_M_REMTABLES);
+    }
+
+    return pnRedirect(pnModURL('Medicula', 'admin', 'tables'));
 }
 
 //VARS
-function pnMedic_admin_vars()
+function Medicula_admin_vars()
+{
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
+
+    SessionUtil::setVar('mediclasttool', 'vars');
+
+    $var_list = pnModAPIFunc('Medicula', 'admin', 'orphanedvars');
+
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('var_list', $var_list);
+    $pnRender->assign('var_count', count($var_list));
+    $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));
+    return $pnRender->fetch('Medicula_admin_vars.html');
+}
+
+function Medicula_admin_varsremove()
 {
 
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-	pnSessionSetVar('mediclasttool', 'vars');
+    if (!SecurityUtil::confirmAuthKey()) {
+        LogUtil::registerError(_BADAUTHKEY);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'varsremove'));
+    }
 
-    $var_list = pnModAPIFunc(	'pnMedic',
-                        		'admin',
-                        		'orphanedvars');	
-	
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;		
-	$pnRender->assign('var_list', $var_list);	
-	$pnRender->assign('var_count', count($var_list));		
-	$pnRender->assign('authid',pnSecGenAuthKey());		
-    return $pnRender->fetch('pnMedic_admin_vars.html');	    
+    $delvars = FormUtil::getPassedValue('delvars');
+
+    if(!is_array($delvars)) {
+        LogUtil::registerError(_MEDIC_NOTHINGSEL);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'vars'));
+    }
+
+    $cnt_removed = pnModAPIFunc( 'Medicula', 'admin', 'varsremove', array('delvars'=>$delvars));
+
+    if($cnt_removed) {
+        LogUtil::registerStatus(_MEDIC_M_REMVARS);
+    }
+
+    return pnRedirect(pnModURL('Medicula', 'admin', 'vars'));
+}
+
+function Medicula_admin_testdata()
+{
+    if (!SecurityUtil::checkPermission('Medicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError();
+    }
+
+    SessionUtil::setVar('mediclasttool', 'testdata');
+
+    $pnRender = pnRender::getInstance('Medicula', false, null, true);
+    $pnRender->assign('authid',SecurityUtil::generateAuthKey('Medicula'));
+    return $pnRender->fetch('Medicula_admin_testdata.html');
 
 }
 
-
-function pnMedic_admin_varsremove()
+function Medicula_admin_testdatado()
 {
+    if (!SecurityUtil::confirmAuthKey()) {
+        LogUtil::registerError(_BADAUTHKEY);
+        return pnRedirect(pnModURL('Medicula', 'admin', 'testdatado'));
+    }
 
-    if (!pnSecConfirmAuthKey()) {
-	
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        return pnRedirect(pnModURL('pnMedic', 'admin', 'vars'));
-		
-    } 
+    $suc = 	pnModAPIFunc( 'Medicula', 'admin', 'gentestdata');
 
-	$delvars = pnVarCleanFromInput('delvars');
+    if(!$suc) {
+        LogUtil::registerError(_MEDIC_UNABLETESTDATA);
+    } else {
+        LogUtil::registerStatus(_MEDIC_M_MADETESTDATA);
+    }
 
-	if(!is_array($delvars)) {
-		
-		pnSessionSetVar('errormsg', pnVarPrepForDisplay( _MEDIC_NOTHINGSEL) );
-		return pnRedirect(pnModURL('pnMedic', 'admin', 'vars'));
-		
-	}
-	
-    $cnt_removed = pnModAPIFunc(	'pnMedic',
-                        			'admin',
-                        			'varsremove',
-									array('delvars'=>$delvars));		
-	if($cnt_removed)
-		pnSessionSetVar('statusmsg', pnVarPrepHTMLDisplay(_MEDIC_M_REMVARS));
-		
-	return pnRedirect(pnModURL('pnMedic', 'admin', 'vars'));
+    return pnRedirect(pnModURL('Medicula', 'admin', 'testdata'));
 
 }
-function pnMedic_admin_testdata()
-{
-
-	if (!pnSecAuthAction(0, 'pnMedic::', '::', ACCESS_ADMIN))
-		return pnVarPrepForDisplay(_MODULENOAUTH);
-		
-	pnSessionSetVar('mediclasttool', 'testdata');
-	
-	$pnRender =& new pnRender('pnMedic');	
-    $pnRender->caching = false;		
-	$pnRender->assign('authid',pnSecGenAuthKey());		
-    return $pnRender->fetch('pnMedic_admin_testdata.html');	
-
-}
-function pnMedic_admin_testdatado()
-{
-
-    if (!pnSecConfirmAuthKey()) {
-	
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        return pnRedirect(pnModURL('pnMedic', 'admin', 'testdata'));
-		
-    } 
-
-    $suc = 	pnModAPIFunc(	'pnMedic',
-							'admin',
-							'gentestdata');	
-
-	if(!$suc) {
-	
-		pnSessionSetVar('errormsg', pnVarPrepForDisplay( _MEDIC_UNABLETESTDATA) );
-	
-	} else {
-	
-		pnSessionSetVar('statusmsg', pnVarPrepHTMLDisplay(_MEDIC_M_MADETESTDATA));
-		
-	}
-
-    return pnRedirect(pnModURL('pnMedic', 'admin', 'testdata'));    
-
-}
-?>

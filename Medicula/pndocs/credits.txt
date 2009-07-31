@@ -2,5 +2,12 @@ $Id$
 ========================================================================
 Credits
 ========================================================================
-pnMedic Version 1.2
-Polites - http://www.polites.net
+
+Medicula:
+    Version 2.0
+    Carsten Volmer (herr.vorragend) http://www.carsten-volmer.de
+
+
+pnMedic:
+    Version 1.2
+    Polites - http://www.polites.net

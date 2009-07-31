@@ -1,16 +1,13 @@
-/* 
-Styles for pnMedic
-*/
+/* $Id$ */
 
 .var_col {
-	text-align: right;
-	white-space: nowrap;
+    text-align: right;
+    white-space: nowrap;
 }
 .val_col {
-	text-align: left;
+    text-align: left;
 
 }
-
 th {
-	white-space: nowrap;
+    white-space: nowrap;
 }

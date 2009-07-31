@@ -1,53 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>pnMedic 1.2 Instructions</title>
-<style type="text/css">
-<!--
-body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-}
-.style1 {color: #FF6600}
--->
-</style>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Medicula 2.0 Instructions</title>
+        <style type="text/css">
+            <!--
+            body {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 12px;
+            }
+            .style1 {color: #FF6600}
+            -->
+        </style>
+    </head>
 
-<body>
-<h1>pnMedic 1.2 </h1>
-<h3>Overview</h3>
-<blockquote>
-  <p>This module was developed to assist in some common issues I come across when deveoping modules for Postnuke. It's main purpose was to keep me from having to execute cleanup queries directly against a MySQL instance. Several of the tools in this module are low-level and although they follow the API, several checks may be skipped. They're designed to be as accurate as possible, but you must use your own judgement before deleting things. </p>
-</blockquote>
-<h3>Installation and Configuration </h3>
-<blockquote>
-  <p>Simply install and activate this module like any other. There are no prerequisites. </p>
-</blockquote>
-<h3>Permissions</h3>
-<blockquote>
-  <p>This module is intented for  administrators only and only checks for full admin rights when running. </p>
-</blockquote>
-<h3>Tools</h3>
-<blockquote>
-  <p>Below is a list of the tools available in pnMedic.</p>
-</blockquote>
-<ul>
-  <li><strong>Module Variables</strong> - This tool will find module variables that have no module in the system. Sometimes, these can be left laying around when testing an module init/remove routine did not work as expected.</li>
-  <li><strong>Database Tables</strong> - This will report any tables that have no definition, or to be more exact, without a locatable <span class="style1">pntables.php</span>.</li>
-  <li><strong>Module Hooks</strong> - Shows any hooks that have no source module.</li>
-  <li><strong>User Sessions</strong> - This tool allows you to delete any user session (except your current one).</li>
-  <li><strong>Modules</strong> - This tool presents a list of <em>all </em>modules in the system regardless of state. It's main purpose is to allow you to &quot;force delete&quot; any module. Note that the module record is simply deleted from the database. No extra work like deleting related hooks is performed automatically. </li>
-</ul>
-<h3>Test Data Generation</h3>
-<blockquote>
-  <p>If you have no &quot;bad&quot; data to work with, you can still test the operation of pnMedic for yucks if you like. Just use the &quot;Test Data&quot; tool do create some junk records in the system that you can then delete. Fun! </p>
-</blockquote>
-<h3>Questions</h3>
-<blockquote>
-  <p>Please direct all questions to the third-party modules support at the <a href="http://community.postnuke.com/module-Forum.htm">pnCommunity forums</a>. </p>
-</blockquote>
-<p>&nbsp;</p>
-<p>&nbsp; </p>
-</body>
+    <body>
+        <h1>Medicula 2.0</h1>
+        <h3>Overview</h3>
+        <blockquote>
+            <p>This module was developed to assist in some common issues I come across when deveoping modules for Postnuke. It's main purpose was to keep me from having to execute cleanup queries directly against a MySQL instance. Several of the tools in this module are low-level and although they follow the API, several checks may be skipped. They're designed to be as accurate as possible, but you must use your own judgement before deleting things. </p>
+        </blockquote>
+        <h3>Installation and Configuration </h3>
+        <blockquote>
+            <p>Simply install and activate this module like any other. There are no prerequisites. </p>
+        </blockquote>
+        <h3>Permissions</h3>
+        <blockquote>
+            <p>This module is intented for  administrators only and only checks for full admin rights when running. </p>
+        </blockquote>
+        <h3>Tools</h3>
+        <blockquote>
+            <p>Below is a list of the tools available in Medicula.</p>
+        </blockquote>
+        <ul>
+            <li><strong>Module Variables</strong> - This tool will find module variables that have no module in the system. Sometimes, these can be left laying around when testing an module init/remove routine did not work as expected.</li>
+            <li><strong>Database Tables</strong> - This will report any tables that have no definition, or to be more exact, without a locatable <span class="style1">pntables.php</span>.</li>
+            <li><strong>Module Hooks</strong> - Shows any hooks that have no source module.</li>
+            <li><strong>User Sessions</strong> - This tool allows you to delete any user session (except your current one).</li>
+            <li><strong>Modules</strong> - This tool presents a list of <em>all </em>modules in the system regardless of state. It's main purpose is to allow you to &quot;force delete&quot; any module. Note that the module record is simply deleted from the database. No extra work like deleting related hooks is performed automatically. </li>
+        </ul>
+        <h3>Test Data Generation</h3>
+        <blockquote>
+            <p>If you have no &quot;bad&quot; data to work with, you can still test the operation of Medicula for yucks if you like. Just use the &quot;Test Data&quot; tool do create some junk records in the system that you can then delete. Fun! </p>
+        </blockquote>
+    </body>
 </html>

@@ -3,45 +3,46 @@
 <!--[ cssversion assign='configclass' ]-->
 <!--[ include file='Medicula_admin_header.html' ]-->
 
-<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="sessionsremove" authid=$authid]-->">
+<div class="pn-informationmsg"><!--[pnml name="_MEDIC_SESSFOUND"]--><br /><!--[pnml name="_MEDIC_IN_ABOUTTSESS"]--></div>
+
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="sessionsremove"]-->">
     <div>
 
-        <!--[if $session_count neq "0"]-->
-
-        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_SESSFOUND"]--><br /><!--[pnml name="_MEDIC_IN_ABOUTTSESS"]--></div>
         <table class="pn-admintable">
-            <tr>
-                <th>&nbsp;</th>
-                <th><!--[pnml name="_MEDIC_UNAME"]--></th>
-                <th><!--[pnml name="_MEDIC_IPADDRESS"]--></th>
-                <th><!--[pnml name="_MEDIC_LASTUSED"]--></th>
-            </tr>
-            <!--[section name="sessions" loop=$user_sessions]-->
-            <!--[assign var="uid" value=$user_sessions[sessions].uid]-->
-            <!--[assign var="sessid" value=$user_sessions[sessions].sessid]-->
-            <tr class="<!--[cycle values='pn-odd,pn-even']-->">
-                <td>
-                    <!--[if $sessid neq $mysessid]-->
-                <input name="delsessions[]" type="checkbox" value="<!--[$user_sessions[sessions].sessid]-->" /><!--[/if ]--></td>
-                <!--[if $uid eq $myuid]-->
-                <td class="var_col"><strong><!--[$user_sessions[sessions].uname]--></strong></td>
-                <!--[else ]-->
-                <td class="var_col"><!--[$user_sessions[sessions].uname]--></td>
-                <!--[/if ]-->
-                <td class="val_col"><!--[$user_sessions[sessions].ipaddr]--></td>
-                <td class="val_col" width="100%"><!--[$user_sessions[sessions].lastused|pndate_format]--></td>
-            </tr>
-            <!--[/section]-->
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th><!--[pnml name="_MEDIC_UNAME"]--></th>
+                    <th><!--[pnml name="_MEDIC_IPADDRESS"]--></th>
+                    <th><!--[pnml name="_MEDIC_LASTUSED"]--></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--[section name="sessions" loop=$user_sessions]-->
+                <!--[assign var="uid" value=$user_sessions[sessions].uid]-->
+                <!--[assign var="sessid" value=$user_sessions[sessions].sessid]-->
+                <tr class="<!--[cycle values='pn-odd,pn-even']-->">
+                    <td>
+                        <!--[if $sessid neq $mysessid]-->
+                        <input name="delsessions[]" type="checkbox" value="<!--[$user_sessions[sessions].sessid]-->" /><!--[/if ]-->
+                    </td>
+                    <!--[if $uid eq $myuid]-->
+                    <td><strong><!--[$user_sessions[sessions].uname]--></strong></td>
+                    <!--[else ]-->
+                    <td><!--[$user_sessions[sessions].uname]--></td>
+                    <!--[/if ]-->
+                    <td><!--[$user_sessions[sessions].ipaddr]--></td>
+                    <td><!--[$user_sessions[sessions].lastused|pndate_format]--></td>
+                </tr>
+                <!--[sectionelse]-->
+                <tr class="pn-admintableempty"><td colspan="4"><!--[pnml name=_MEDIC_NOSESSIONS]--></td></tr>
+                <!--[/section]-->
+            </tbody>
         </table>
 
-        <!--[else]-->
-
-        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_NOSESSIONS"]--></div>
-
-        <!--[/if]-->
-
-        <!--[if $session_count neq "0"]-->
+        <!--[if $user_sessions|@count neq "0"]-->
         <div class="<!--[ $configclass ]-->buttons">
+            <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
             <input type="submit" value="<!--[pnml name="_MEDIC_DELSEL"]-->" />
         </div>
         <!--[/if]-->

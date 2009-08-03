@@ -2,27 +2,30 @@
 <!--[ pnml name='_MEDIC_HOME' assign=templatetitle ]-->
 <!--[ include file='Medicula_admin_header.html' ]-->
 
-<div class="pn-informationmsg"><!--[pnml name="_MEDIC_IN_PICKTOOL"]--><br /><!--[pnml name="_MEDIC_IN_ABOUTTESTDATA"]--></div>
+<div class="pn-informationmsg"><!--[pnml name="_MEDIC_IN_PICKTOOL"]--></div>
 
-<h3>mods_uninitialised (<!--[ $mods_uninitialised|@count]-->)</h3>
-<ul>
-    <!--[ foreach item=mod from=$mods_uninitialised ]-->
-    <li><!--[ $mod.displayname ]--></li>
-    <!--[ /foreach ]-->
-</ul>
-
-<h3>mods_missing (<!--[ $mods_missing|@count]-->)</h3>
-<ul>
+<h3><a href="<!--[pnmodurl modname="Modules" type="admin" func="main"]-->"><!--[pnml name="_MEDIC_MODULES"]--></a></h3>
+<dl>
+    <!--[ if $mods_missing ]-->
+    <dt><!--[pnml name="_MEDIC_FILESMISSING"]--> (<!--[ $mods_missing|@count]-->)</dt>
     <!--[ foreach item=mod from=$mods_missing ]-->
-    <li><!--[ $mod.displayname ]--></li>
+    <dd><!--[ $mod.displayname ]--></dd>
     <!--[ /foreach ]-->
-</ul>
+    <!--[ /if ]-->
 
-<h3>mods_invalid (<!--[ $mods_invalid|@count]-->)</h3>
-<ul>
+    <!--[ if $mods_invalid ]-->
+    <dt><!--[pnml name="_MEDIC_INVALID"]--> (<!--[ $mods_invalid|@count]-->)</dt>
     <!--[ foreach item=mod from=$mods_invalid ]-->
-    <li><!--[ $mod.displayname ]--></li>
+    <dd><!--[ $mod.displayname ]--></dd>
     <!--[ /foreach ]-->
-</ul>
+    <!--[ /if ]-->
+
+    <!--[ if $mods_uninitialised ]-->
+    <dt><!--[pnml name="_MEDIC_UNINIT"]--> (<!--[ $mods_uninitialised|@count]-->)</dt>
+    <!--[ foreach item=mod from=$mods_uninitialised ]-->
+    <dd><!--[ $mod.displayname ]--></dd>
+    <!--[ /foreach ]-->
+    <!--[ /if ]-->
+</dl>
 
 <!--[ include file='Medicula_admin_footer.html' ]-->

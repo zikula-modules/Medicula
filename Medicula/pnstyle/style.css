@@ -1,13 +1,1 @@
 /* $Id$ */
-
-.var_col {
-    text-align: right;
-    white-space: nowrap;
-}
-.val_col {
-    text-align: left;
-
-}
-th {
-    white-space: nowrap;
-}

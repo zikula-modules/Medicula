@@ -1,18 +1,20 @@
 <!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_SETUP' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
 
-<form class="<!--[ $configclass ]-->" action="<!--[pnmodurl modname=Modules type=admin func=remove authid=$authid]-->" method="post" enctype="application/x-www-form-urlencoded">
-    <table width="90%" border="0" cellspacing="0" cellpadding="3">
-        <tr>
-            <td valign="top"><img src="modules/Medicula/pnimages/install.gif" alt="" width="60" height="50" /></td>
-            <td width="10">&nbsp;</td>
-            <td width="100%" valign="top"><!--[opentable]-->
-                <!--[opentable2]--><p><span class="pn-pagetitle"><!--[pnml name="_MEDIC_SETUP"]--></span> </p><!--[closetable2]-->
-                <p><!--[pnml name="_MEDIC_SURETODELETE"]--></p>
+<form class="<!--[ $configclass ]-->" action="<!--[pnmodurl modname=Modules type=admin func=remove]-->" method="post" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend><!--[pnml name="_MEDIC_SETUP"]--></legend>
+        <div class="<!--[ $configclass ]-->row">
+            <!--[pnml name="_MEDIC_SURETODELETE"]-->
+        </div>
+    </fieldset>
 
-                <input name="Submit" type="submit" id="Submit" value="<!--[pnml name="_MEDIC_DELETE"]-->">
-                &nbsp;
-                <input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Modules" type="admin"]--> '"/><!--[closetable]-->
-            </td>
-        </tr>
-    </table>
+    <div class="<!--[ $configclass ]-->buttons">
+        <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
+        <input name="submit" type="submit" id="submit" value="<!--[pnml name="_MEDIC_DELETE"]-->">
+    </div>
 </form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

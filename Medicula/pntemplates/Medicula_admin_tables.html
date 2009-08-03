@@ -3,34 +3,34 @@
 <!--[ cssversion assign='configclass' ]-->
 <!--[ include file='Medicula_admin_header.html' ]-->
 
-<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="tablesremove" authid=$authid]-->">
+<div class="pn-informationmsg"><!--[pnml name="_MEDIC_TABSFOUND"]--></div>
+
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="tablesremove"]-->">
     <div>
 
-        <!--[if $table_count neq "0"]-->
-
-        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_TABSFOUND"]--></div>
-        <div class="pn-warningmsg"><!--[pnml name="_MEDIC_TABSREMWARNING"]--></div>
         <table class="pn-admintable">
-            <tr>
-                <th>&nbsp;</th>
-                <th>Table name</th>
-            </tr>
-            <!--[foreach from=$table_list item=table_name]-->
-            <tr class="<!--[cycle values='pn-odd,pn-even']-->">
-                <td><input name="deltabs[]" type="checkbox" value="<!--[$table_name]-->" /></td>
-                <td class="val_col" width="100%"><!--[$table_name]--></td>
-            </tr>
-            <!--[/foreach]-->
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Table name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--[foreach from=$table_list item=table_name]-->
+                <tr class="<!--[cycle values='pn-odd,pn-even']-->">
+                    <td><input name="deltabs[]" type="checkbox" value="<!--[$table_name]-->" /></td>
+                    <td><!--[$table_name]--></td>
+                </tr>
+                <!--[foreachelse]-->
+                <tr class="pn-admintableempty"><td colspan="2"><!--[pnml name=_MEDIC_NOTABS]--></td></tr>
+                <!--[/foreach]-->
+            </tbody>
         </table>
 
-        <!--[else]-->
-
-        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_NOTABS"]--></div>
-
-        <!--[/if]-->
-
-        <!--[if $table_count neq "0"]-->
+        <!--[if $table_list|@count neq "0"]-->
+        <div class="pn-warningmsg"><!--[pnml name="_MEDIC_TABSREMWARNING"]--></div>
         <div class="<!--[ $configclass ]-->buttons">
+            <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
             <input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />
         </div>
         <!--[/if]-->

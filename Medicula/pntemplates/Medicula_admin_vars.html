@@ -3,35 +3,35 @@
 <!--[ cssversion assign='configclass' ]-->
 <!--[ include file='Medicula_admin_header.html' ]-->
 
-<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="varsremove" authid=$authid]-->">
+<div class="pn-informationmsg"><!--[pnml name="_MEDIC_VARSFOUND"]--></div>
+
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="varsremove"]-->">
     <div>
 
-        <!--[if $var_count neq "0"]-->
-
-        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_VARSFOUND"]--></div>
         <table class="pn-admintable">
-            <tr>
-                <th>&nbsp;</th>
-                <th><!--[pnml name="_MEDIC_MODULE"]--></th>
-                <th><!--[pnml name="_MEDIC_VARNAME"]--></th>
-            </tr>
-            <!--[section name="vars" loop=$var_list]-->
-            <tr class="<!--[cycle values='pn-odd,pn-even']-->">
-                <td><input name="delvars[]" type="checkbox" value="<!--[$var_list[vars].modname]-->-<!--[$var_list[vars].varname]-->" /></td>
-                <td class="var_col"><!--[$var_list[vars].modname]--></td>
-                <td class="val_col" width="100%"><!--[$var_list[vars].varname]--></td>
-            </tr>
-            <!--[/section]-->
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th><!--[pnml name="_MEDIC_MODULE"]--></th>
+                    <th><!--[pnml name="_MEDIC_VARNAME"]--></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--[section name="vars" loop=$var_list]-->
+                <tr class="<!--[cycle values='pn-odd,pn-even']-->">
+                    <td><input name="delvars[]" type="checkbox" value="<!--[$var_list[vars].modname]-->-<!--[$var_list[vars].varname]-->" /></td>
+                    <td><!--[$var_list[vars].modname]--></td>
+                    <td><!--[$var_list[vars].varname]--></td>
+                </tr>
+                <!--[sectionelse]-->
+                <tr class="pn-admintableempty"><td colspan="3"><!--[pnml name=_MEDIC_NOVARS]--></td></tr>
+                <!--[/section]-->
+            </tbody>
         </table>
 
-        <!--[else]-->
-
-        <div class="pn-informationmsg"><!--[pnml name="_MEDIC_NOVARS"]--></div>
-
-        <!--[/if]-->
-
-        <!--[if $var_count neq "0"]-->
+        <!--[if $var_list|@count neq "0"]-->
         <div class="<!--[ $configclass ]-->buttons">
+            <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
             <input type="submit" value="<!--[pnml name="_MEDIC_REMSEL"]-->" />
         </div>
         <!--[/if]-->

@@ -1,16 +1,21 @@
 <!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_INSTALLATION' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
 
-<table width="90%" border="0" cellspacing="0" cellpadding="3">
-    <tr>
-        <td valign="top"><img src="modules/Medicula/pnimages/install.gif" alt="" width="60" height="50" /></td>
-        <td width="10">&nbsp;</td>
-        <td width="100%" valign="top"><!--[opentable]-->
-            <!--[opentable2]--><p><span class="pn-pagetitle"><!--[pnml name="_MEDIC_INSTALLATION"]--></span> </p><!--[closetable2]-->
-            <p><!--[pnml name="_MEDIC_MAIN_DESC"]--></p>
-            <p><!--[pnml name="_MEDIC_GOINSTALL"]--></p>
-            <input type="button" value="<!--[pnml name="_MEDIC_INSTALL"]-->" class="pn-button" onClick="parent.location='<!--[pnmodurl modname=Modules type=admin func=initialise authid=$authid]-->'" />
-            &nbsp;
-            <input type="button" value="<!--[pnml name="_MEDIC_CANCEL"]-->" onClick="parent.location='<!--[pnmodurl modname="Modules" type="admin"]--> '"/><!--[closetable]-->
-        </td>
-    </tr>
-</table>
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="tablesremove"]-->">
+    <fieldset>
+        <legend><!--[pnml name="_MEDIC_INSTALLATION"]--></legend>
+        <div class="<!--[ $configclass ]-->row">
+            <!--[pnml name="_MEDIC_MAIN_DESC"]--><br />
+            <!--[pnml name="_MEDIC_GOINSTALL"]-->
+        </div>
+    </fieldset>
+
+    <div class="<!--[ $configclass ]-->buttons">
+        <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
+        <input type="button" value="<!--[pnml name="_MEDIC_INSTALL"]-->" onclick="parent.location='<!--[pnmodurl modname=Modules type=admin func=initialise authid=$authid]-->'" />
+    </div>
+</form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

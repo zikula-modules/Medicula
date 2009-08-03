@@ -3,23 +3,18 @@
 <!--[ cssversion assign='configclass' ]-->
 <!--[ include file='Medicula_admin_header.html' ]-->
 
-<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="testdatado" authid=$authid]-->">
-    <table width="100%">
-        <tr>
-            <td><fieldset>
-                <legend> <strong>
-                    <!--[pnml name="_MEDIC_TESTDATA"]-->
-                </strong> </legend>
-                <p>
-                    <!--[pnml name="_MEDIC_ABOUTTESTDATA"]-->
-                </p>
-            </fieldset></td>
-        </tr>
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="testdatado"]-->">
+    <fieldset>
+        <legend><!--[pnml name="_MEDIC_TESTDATA"]--></legend>
+        <div class="<!--[ $configclass ]-->row">
+            <!--[pnml name="_MEDIC_ABOUTTESTDATA"]-->
+        </div>
+    </fieldset>
 
-        <tr>
-            <td><input type="submit" value="<!--[pnml name="_MEDIC_GO"]-->" /></td>
-        </tr>
-    </table>
+    <div class="<!--[ $configclass ]-->buttons">
+        <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
+        <input type="submit" value="<!--[pnml name="_SUBMIT"]-->" />
+    </div>
 </form>
 
 <!--[ include file='Medicula_admin_footer.html' ]-->

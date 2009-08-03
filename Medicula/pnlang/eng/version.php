@@ -10,4 +10,4 @@
  */
 
 define('_MEDIC_DISPLAYNAME','Medicula');
-define('_MEDIC_DESCRIPTION','A database cleanup utility for Zikula-administrators.');
+define('_MEDIC_DESCRIPTION','A database cleanup utility for Zikula-administrators');

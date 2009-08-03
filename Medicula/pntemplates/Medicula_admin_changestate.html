@@ -1,0 +1,46 @@
+<!--[* $Id$ *]-->
+<!--[ pnml name='_MEDIC_CHANGESTATE' assign=templatetitle ]-->
+<!--[ cssversion assign='configclass' ]-->
+<!--[ include file='Medicula_admin_header.html' ]-->
+
+<div class="pn-warningmsg"><!--[pnml name="_MEDIC_MODSSTATEWARNING"]--></div>
+
+<form class="<!--[ $configclass ]-->" method="post" action="<!--[pnmodurl modname="Medicula" type="admin" func="setstate"]-->">
+    <fieldset>
+        <legend><!--[$templatetitle]--></legend>
+        <div class="<!--[ $configclass ]-->row">
+            <label><!--[pnml name="_MEDIC_MODULE"]--></label>
+            <span><!--[$modinfo.name|pnvarprepfordisplay]--></span>
+        </div>
+
+        <div class="<!--[ $configclass ]-->row">
+            <label><!--[pnml name="_MEDIC_VERSION"]--></label>
+            <span><!--[$modinfo.version|pnvarprepfordisplay]--></span>
+        </div>
+
+        <div class="<!--[ $configclass ]-->row">
+            <label><!--[pnml name="_MEDIC_DIRECTORY"]--></label>
+            <span><!--[$modinfo.directory|pnvarprepfordisplay]--></span>
+        </div>
+
+        <div class="<!--[ $configclass ]-->row">
+            <label for="new_state"><!--[pnml name="_MEDIC_STATE"]--></label>
+            <select id="new_state" name="new_state">
+                <option value="<!--[pnml name=PNMODULE_STATE_UNINITIALISED]-->"<!--[if $state eq 1]--> selected="selected"<!--[/if]-->><!--[pnml name=_MEDIC_UNINIT]--></option>
+                <option value="<!--[pnml name=PNMODULE_STATE_INACTIVE]-->"<!--[if $state eq 2]--> selected="selected"<!--[/if]-->><!--[pnml name=_INACTIVE]--></option>
+                <option value="<!--[pnml name=PNMODULE_STATE_ACTIVE]-->"<!--[if $state eq 3]--> selected="selected"<!--[/if]-->><!--[pnml name=_ACTIVE]--></option>
+                <option value="<!--[pnml name=PNMODULE_STATE_MISSING]-->"<!--[if $state eq 4]--> selected="selected"<!--[/if]-->><!--[pnml name=_MEDIC_FILESMISSING]--></option>
+                <option value="<!--[pnml name=PNMODULE_STATE_UPGRADED]-->"<!--[if $state eq 5]--> selected="selected"<!--[/if]-->><!--[pnml name=_MEDIC_UPGRADED]--></option>
+                <option value="<!--[pnml name=PNMODULE_STATE_INVALID]-->"<!--[if $state eq -1]--> selected="selected"<!--[/if]-->><!--[pnml name=_MEDIC_INVALID]--></option>
+            </select>
+        </div>
+    </fieldset>
+
+    <div class="<!--[ $configclass ]-->buttons">
+        <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Medicula"]-->" />
+        <input type="hidden" id="id" name="id" value="<!--[$modinfo.id|pnvarprepfordisplay]-->" />
+        <input type="submit" value="<!--[pnml name="_SUBMIT"]-->" />
+    </div>
+</form>
+
+<!--[ include file='Medicula_admin_footer.html' ]-->

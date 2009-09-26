@@ -1,0 +1,15 @@
+Medicula - 2.0 - Carsten Volmer (herr.vorragend)
+===============================================================================
+- ported to Zikula
+- streamlined templates
+- module state can now be changed without any interactions and initializations steps
+- german language :-)
+- bugfixing
+
+
+pnMedia - v1.2
+===============================================================================
+- Added ability to delete modules directly.  Useful when development of a module init routine has created issues.
+- Changes: Gave the Test Data feature a start page so we can read about it before actually executing.
+- Fixes:  Streamlined the security checks.
+

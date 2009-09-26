@@ -1,9 +1,0 @@
-Medicula - v1.2
-Release Notes
- 
-Additions: Added ability to delete modules directly.  Useful when development of a module init routine has created issues.
-
-Changes: Gave the Test Data feature a start page so we can read about it before actually executing.
-
-Fixes:  Streamlined the security checks.
-
